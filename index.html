@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #target {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+    <title>Reaction Time Game</title>
+</head>
+<body>
+
+<div id="target" onclick="handleClick()">Click Me!</div>
+
+<script>
+    let startTime;
+
+    function startGame() {
+        // Set a random time interval for the target to turn green
+        const randomTime = Math.floor(Math.random() * 5000) + 1000; // between 1 and 6 seconds
+        setTimeout(() => {
+            document.getElementById('target').style.backgroundColor = 'green';
+            startTime = new Date().getTime();
+        }, randomTime);
+    }
+
+    function handleClick() {
+        if (startTime) {
+            const endTime = new Date().getTime();
+            const reactionTime = endTime - startTime;
+            alert(`Your reaction time: ${reactionTime} milliseconds`);
+            resetGame();
+        } else {
+            alert('Wait for the target to turn green!');
+        }
+    }
+
+    function resetGame() {
+        document.getElementById('target').style.backgroundColor = 'red';
+        startTime = null;
+        setTimeout(startGame, 1000); // Delay before starting a new game
+    }
+
+    // Start the game initially
+    startGame();
+</script>
+
+</body>
+</html>
